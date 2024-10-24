@@ -23,11 +23,11 @@ def duck(message):
     image_url = get_duck_image_url()
     bot.reply_to(message, image_url)
 
-    @bot.message_handler(commands=['duck'])
-    def duck(message):
-        '''По команде duck вызывает функцию get_duck_image_url и отправляет URL изображения утки'''
-        image_url = get_duck_image_url()
-        bot.reply_to(message, image_url)
+@bot.message_handler(commands=['duck'])
+def duck(message):
+    '''По команде duck вызывает функцию get_duck_image_url и отправляет URL изображения утки'''
+    image_url = get_duck_image_url()
+    bot.reply_to(message, image_url)
 
 def get_dog_image_url():
     url = 'https://random.dog/woof.json'
@@ -89,6 +89,8 @@ def send_help(message):
         "/heh число - Пишет he число раз.\n"
         "/set <seconds> — Установить таймер на указанное количество секунд; по истечении времени бот отправит сообщение.\n"
         "/unset — Остановить таймер (очистить все запланированные задачи для текущего чата)."
+        "/fabrics - Узнать об экологически чистых тканях.\n"
+        "/stores - Получить рекомендации по магазинам экологичной одежды."
     )
     bot.reply_to(message, help_text)
 
@@ -128,6 +130,35 @@ def last_flip_command(message):
         bot.reply_to(message, 'Монета ещё не была подброшена.')
     else:
         bot.reply_to(message, f'Последний результат подбрасывания монеты: {last_flip}')
+
+
+# Новые функции для экологии
+@bot.message_handler(commands=['fabrics'])
+def fabrics(message):
+    '''Предоставляет информацию об экологически чистых тканях'''
+    reply_text = (
+        "Вот несколько экологически чистых тканей:\n"
+        "1. Хлопок - Натуральная, дышащая ткань, но требует много воды для производства.\n"
+        "2. Лен - Экологичная, устойчивая к вредителям ткань, требующая минимального ухода.\n"
+        "3. Шерсть - Натуральная изоляция, но от использования шерсти зависят условия её производства.\n"
+        "4. Бамбук - Быстрорастущий, легкообрабатываемый материал, но следует проверять методы обработки.\n"
+        "5. Органический хлопок - Выращенный без химических удобрений, лучше для здоровья земли."
+    )
+    bot.reply_to(message, reply_text)
+
+@bot.message_handler(commands=['stores'])
+def stores(message):
+    '''Предоставляет рекомендации по магазинам экологичной одежды'''
+    reply_text = (
+        "Вот несколько онлайн-магазинов, где вы можете купить экологичную одежду:\n"
+        "1. Patagonia - известен своим экологичным подходом.\n"
+        "2. People Tree - сертифицированная этичная мода.\n"
+        "3. Everlane - открытая информация о производстве и устойчивых практиках.\n"
+        "4. Ecolast - одежда из экологически чистых материалов.\n"
+        "5. Reformation - мода с учетом устойчивости.\n"
+    )
+    bot.reply_to(message, reply_text)
+
 
 @bot.message_handler(commands=['привет'])
 def send_hello(message):
